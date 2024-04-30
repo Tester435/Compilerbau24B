@@ -163,6 +163,20 @@ public class Parser {
     }
 
     ASTStmtNode getVarDeclareStmt() throws Exception {
+        if (m_lexer.lookAhead().m_type == Type.DECLARE) {
+            m_lexer.advance();
+            if (m_lexer.lookAhead().m_type == Type.IDENT) {
+                if (m_symbolTable.getSymbol(m_lexer.lookAhead().m_value) == null) {
+                    ASTVarDeclareStmtNode astVarDeclareStmtNode = new ASTVarDeclareStmtNode(m_lexer.lookAhead().m_value, m_symbolTable);
+                    m_lexer.advance();
+                    return astVarDeclareStmtNode;
+                } else {
+                    throw  new Exception("Identifier already declared!");
+                }
+            } else {
+                throw new Exception("An identifier must follow after declare expression!");
+            }
+        }
         return null;
     }
 
