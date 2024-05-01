@@ -168,11 +168,9 @@ public class Parser {
             Token token = m_lexer.lookAhead();
             m_lexer.expect(Type.IDENT);
                 if (m_symbolTable.getSymbol(token.m_value) == null) {
-                    ASTVarDeclareStmtNode astVarDeclareStmtNode = new ASTVarDeclareStmtNode(token.m_value, m_symbolTable);
-                    astVarDeclareStmtNode.execute();
-                    return astVarDeclareStmtNode;
+                    return new ASTVarDeclareStmtNode(m_symbolTable.createSymbol(token.m_value));
                 } else {
-                    throw  new Exception("Identifier already declared!");
+                    throw new CompilerException("Identifier " + token.m_value + " already declared!", m_lexer.m_input.getLine(), m_lexer.m_input.currentLine(), "A new identifier");
                 }
             }
         return null;
