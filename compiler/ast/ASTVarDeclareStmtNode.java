@@ -1,26 +1,24 @@
 package compiler.ast;
 
+import compiler.Symbol;
 import compiler.SymbolTableIntf;
 import java.io.OutputStreamWriter;
 
 public class ASTVarDeclareStmtNode extends ASTStmtNode {
 
-    String identifierSymbol;
-    SymbolTableIntf symbolTable;
+    Symbol symbol;
 
-    public ASTVarDeclareStmtNode(String identifierSymbol, SymbolTableIntf symbolTable) {
-        this.identifierSymbol = identifierSymbol;
-        this.symbolTable = symbolTable;
+    public ASTVarDeclareStmtNode(Symbol symbol) {
+        this.symbol = symbol;
     }
 
     @Override
     public void print(OutputStreamWriter outStream, String indent) throws Exception {
-        outStream.write(indent + "DECLARE" + this.identifierSymbol);
+        outStream.write(indent + "DECLARE" + this.symbol.m_name);
         outStream.write("\n");
     }
 
     @Override
     public void execute() {
-        this.symbolTable.createSymbol(this.identifierSymbol);
     }
 }
